@@ -19,6 +19,17 @@ class RedactPipelineResult:
     def line_count(self) -> int:
         return len(self.lines)
 
+    def write_to_file(self, path: Path) -> None:
+        """Write the redacted lines to *path*, one line per entry.
+
+        Parameters
+        ----------
+        path:
+            Destination file.  Parent directories must already exist.
+        """
+        with path.open("w", encoding="utf-8") as fh:
+            fh.writelines(self.lines)
+
 
 def run_redact_pipeline(
     path: Path,
