@@ -32,6 +32,18 @@ def iter_chunks(
     """Yield successive byte chunks from *path* between *start_offset* and
     *end_offset* (exclusive).  Each chunk is aligned to a newline boundary so
     that callers never receive a partial line at a chunk boundary.
+
+    Args:
+        path: Path to the log file to read.
+        start_offset: Byte offset at which to begin reading. Defaults to 0.
+        end_offset: Byte offset at which to stop reading (exclusive). If
+            ``None``, reads until end of file.
+        chunk_size: Maximum number of bytes to read per chunk before aligning
+            to a newline boundary. Defaults to ``DEFAULT_CHUNK_SIZE`` (1 MB).
+
+    Raises:
+        ValueError: If *chunk_size* is not a positive integer.
+        FileNotFoundError: If *path* does not exist.
     """
     if chunk_size <= 0:
         raise ValueError("chunk_size must be a positive integer")
